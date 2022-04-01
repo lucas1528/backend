@@ -1,4 +1,6 @@
 from api.models import db
+from datetime import date
+
 
 
 class PlantaModel(db.Model):
@@ -45,3 +47,10 @@ class PlantaModel(db.Model):
     def delete_planta(self):
         db.session.delete(self)
         db.session.commit()
+    
+    @classmethod
+    def format_data(cls, dados):
+        data = dados['inicio_do_cultivo'].split('-')
+        data = list(map(int, data))
+        dados['inicio_do_cultivo'] = date(data[0], data[1], data[2])
+        return dados
