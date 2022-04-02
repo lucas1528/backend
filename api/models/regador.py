@@ -1,33 +1,31 @@
-from models import db
+from api.models import db
+from random import randint
 
 class RegadorModel(db.Model):
     __tablename__ = 'regadores'
 
     id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(80))
-    funcionamento_geral = db.Column(db.Float(precision=2))
-    funcionamento_das_aletas = db.Column(db.Boolean())
-    funcionamento_do_motor = db.Column(db.Boolean())
-    velocidade_das_aletas = db.Column(db.Integer)
+    nome = db.Column(db.String(20))
+    localizacao = db.Column(db.String(20))
     temporizador = db.Column(db.Integer)
+    voltagem_do_regador = db.Column(db.Float(precision=2))
+    funcionamento_do_regador = db.Column(db.Boolean())
 
-    def __init__(self, nome, funcionamento_geral, funcionamento_das_aletas, funcionamento_do_motor, velocidade_das_aletas, temporizador):
+    def __init__(self, nome, localizacao, temporizador, voltagem_do_regador, funcionamento_do_regador):
         self.nome = nome
-        self.funcionamento_geral = funcionamento_geral
-        self.funcionamento_das_aletas = funcionamento_das_aletas
-        self.funcionamento_do_motor = funcionamento_do_motor
-        self.velocidade_das_aletas = velocidade_das_aletas
+        self.localizacao = localizacao
         self.temporizador = temporizador
-    
+        self.voltagem_do_regador = voltagem_do_regador
+        self.funcionamento_do_regador = funcionamento_do_regador
+        
     def json(self):
         return {
             'id': self.id,
             'nome': self.nome,
-            'funcionamento_geral': self.funcionamento_geral,
-            'funcionamento_das_aletas': self.funcionamento_das_aletas,
-            'funcionamento_do_motor': self.funcionamento_do_motor,
-            'velocidade_das_aletas': self.velocidade_das_aletas,
-            'temporizador': self.temporizador
+            'localizacao': self.localizacao,
+            'temporizador': self.temporizador,
+            'voltagem_do_regador': self.voltagem_do_regador,
+            'funcionamento_do_regador': self.funcionamento_do_regador
         }
     
     @classmethod
@@ -41,14 +39,36 @@ class RegadorModel(db.Model):
         db.session.add(self)
         db.session.commit()
     
-    def update_regador(self, id, nome, funcionamento_geral, funcionamento_das_aletas, funcionamento_do_motor, velocidade_das_aletas, temporizador):
+    def update_regador(self, nome, localizacao, temporizador, voltagem_do_regador, funcionamento_do_regador):
         self.nome = nome
-        self.funcionamento_geral = funcionamento_geral
-        self.funcionamento_das_aletas = funcionamento_das_aletas
-        self.funcionamento_do_motor = funcionamento_do_motor
-        self.velocidade_das_aletas = velocidade_das_aletas
+        self.localizacao = localizacao
         self.temporizador = temporizador
+        self.voltagem_do_regador = voltagem_do_regador
+        self.funcionamento_do_regador = funcionamento_do_regador
+        
 
     def delete_regador(self):
         db.session.delete(self)
         db.session.commit()
+
+    @classmethod
+    def simula_funcionamento(cls):
+        simulacao = dict()
+        if randint(0, 100) % 2 == 0:
+            simulacao['funcionamento_do_regador'] = True
+        else:
+            simulacao['funcionamento_do_regador'] = False
+
+        if randint(0, 100) % 2 == 0:
+            simulacao['voltagem_do_regador'] = randint(110, 120)
+        else:
+            simulacao['voltagem_do_regador'] = randint(75, 90)
+
+        return simulacao
+    
+    def format_data(self, dados):
+        objeto = self.json()
+        for key, value in dados.items():
+            if not value:
+                dados[key] = objeto[key]
+        return dados

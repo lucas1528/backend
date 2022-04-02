@@ -7,9 +7,9 @@ class PlantaModel(db.Model):
     __tablename__ = 'plantas'
 
     id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(80))
-    especie = db.Column(db.String(80))
-    localizacao = db.Column(db.String(80))
+    nome = db.Column(db.String(40))
+    especie = db.Column(db.String(40))
+    localizacao = db.Column(db.String(20))
     inicio_do_cultivo = db.Column(db.Date())
 
     def __init__(self, nome, especie, localizacao, inicio_do_cultivo):
