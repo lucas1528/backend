@@ -5,11 +5,10 @@ from .config import config_db
 from .models import db
 from .routes import routes
 
-
 app = Flask(__name__)
 
 @app.before_first_request
-def cria_banco():
+def create_db():
     db.create_all()
 
 def create_app():
@@ -21,5 +20,3 @@ def create_app():
     db.init_app(app)
 
     return app
-
-
