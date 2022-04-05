@@ -1,7 +1,7 @@
-from api.app import create_app
+from api.app import criar_app
 
 
 if __name__ == '__main__':
-    app = create_app()
+    app = criar_app()
 
     app.run(debug=True)

@@ -1,4 +1,4 @@
 from flask_sqlalchemy import SQLAlchemy
 
 
-db = SQLAlchemy()
+banco_de_dados = SQLAlchemy()

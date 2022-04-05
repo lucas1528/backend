@@ -1,21 +1,21 @@
 from flask import Flask
 from flask_restful import Api
 
-from .config import config_db
-from .models import db
-from .routes import routes
+from .configuracoes import configuracao_banco_de_dados as config_db
+from .modelos import banco_de_dados as db
+from .rotas import rotas
 
 app = Flask(__name__)
 
 @app.before_first_request
-def create_db():
+def criar_banco_de_dados():
     db.create_all()
 
-def create_app():
-    config_db.init_app(app)
+def criar_app():
+    config_db.inicia_app(app)
 
     api = Api(app)
-    routes.init_api(api)
+    rotas.inicia_app(api)
 
     db.init_app(app)
 
