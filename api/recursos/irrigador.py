@@ -35,7 +35,7 @@ class Irrigador(Resource):
             manipulador.salvar_objeto(irrigador)
         except:
             return {'mensagem': 'Ocorreu um erro interno no servidor ao tentar salvar o irrigador.'}, 500
-        return {'mensagem': 'O irrigador foi cadastrado com sucesso!', 'irrigador': irrigador.json()}, 200
+        return {'mensagem': 'O irrigador foi cadastrado com sucesso!', 'irrigador': irrigador.json()}, 201
 
     def patch(self, id):
         irrigador = manipulador.localizar_objeto(ModeloIrrigador, id)

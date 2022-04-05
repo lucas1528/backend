@@ -31,7 +31,7 @@ class Planta(Resource):
             manipulador.salvar_objeto(planta)
         except:
             return {'mensagem': 'Ocorreu um erro interno no servidor ao tentar salvar a planta.'}, 500
-        return {'mensagem': 'A planta foi cadastrada com sucesso!', 'planta': planta.json()}, 200
+        return {'mensagem': 'A planta foi cadastrada com sucesso!', 'planta': planta.json()}, 201
 
     def patch(self, id):
         planta = manipulador.localizar_objeto(ModeloPlanta, id)
