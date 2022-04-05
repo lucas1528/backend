@@ -25,34 +25,39 @@ class Planta(Resource):
     
     def post(self):
         dados = Planta.args.parse_args()
-        dados = ModeloPlanta.formatar_dada(dados)
+        if ModeloPlanta.validar_argumentos(dados):
+            dados = ModeloPlanta.formatar_data(dados)
         planta = ModeloPlanta(**dados)
         try:
             manipulador.salvar_objeto(planta)
         except:
             return {'mensagem': 'Ocorreu um erro interno no servidor ao tentar salvar a planta.'}, 500
         return {'mensagem': 'A planta foi cadastrada com sucesso!', 'planta': planta.json()}, 201
-
+        
     def patch(self, id):
-        planta = manipulador.localizar_objeto(ModeloPlanta, id)
-        if planta:
-            dados = Planta.args.parse_args()
-            dados = manipulador.verificar_dados_vazios(planta, dados)
-            dados = ModeloPlanta.formatar_data(dados)
-            planta.atualizar_planta(**dados)
-            try:
-                manipulador.salvar_objeto(planta)
-            except:
-                return {'mensagem': 'Ocorreu um erro interno no servidor ao tentar atualizar a planta.'}, 500
-            return {'mensagem': 'As informações da planta foram atualizados.', 'planta': planta.json()}, 200
-        return {'mensagem': 'Planta não encontrada.'}, 404
-            
+        if id:
+            planta = manipulador.localizar_objeto(ModeloPlanta, id)
+            if planta:
+                dados = Planta.args.parse_args()
+                dados = manipulador.verificar_dados_vazios(planta, dados)
+                dados = ModeloPlanta.formatar_data(dados)
+                planta.atualizar_planta(**dados)
+                try:
+                    manipulador.salvar_objeto(planta)
+                except:
+                    return {'mensagem': 'Ocorreu um erro interno no servidor ao tentar atualizar a planta.'}, 500
+                return {'mensagem': 'As informações da planta foram atualizados.', 'planta': planta.json()}, 200
+            return {'mensagem': 'Planta não encontrada.'}, 404
+        return {'mensagem': "Requisição mal feito, o atributo 'id' é obrigatório."}, 400    
+
     def delete(self, id):
-        planta = manipulador.localizar_objeto(ModeloPlanta, id)
-        if planta:
-            try:
-                manipulador.deletar_objeto(planta)
-            except:
-                return {'mensagem': 'Ocorreu um erro interno no servidor ao tentar deletar a planta.'}, 500
-            return {'mensagem': 'Planta deletada.'}, 200
-        return {'mensagem': 'Planta não encontrada.'}, 404
+        if id:
+            planta = manipulador.localizar_objeto(ModeloPlanta, id)
+            if planta:
+                try:
+                    manipulador.deletar_objeto(planta)
+                except:
+                    return {'mensagem': 'Ocorreu um erro interno no servidor ao tentar deletar a planta.'}, 500
+                return {'mensagem': 'Planta deletada.'}, 200
+            return {'mensagem': 'Planta não encontrada.'}, 404
+        return {'mensagem': "Requisição mal feito, o atributo 'id' é obrigatório."}, 400  

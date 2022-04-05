@@ -39,3 +39,10 @@ class ModeloPlanta(db.Model):
         data = list(map(int, data))
         dados['inicio_do_cultivo'] = date(data[0],data[1], data[2])
         return dados
+    
+    @classmethod
+    def validar_argumentos(cls, dados):
+        argumentos = dados.copy()
+        if argumentos['inicio_do_cultivo']:
+            return True
+        return False
