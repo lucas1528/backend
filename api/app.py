@@ -9,9 +9,16 @@ app = Flask(__name__)
 
 @app.before_first_request
 def criar_banco_de_dados():
+    """cria o banco de dados antes da primeira requisição
+    """
     db.create_all()
 
 def criar_app():
+    """cria a aplicação da api
+
+    Retorno:
+        objeto: Instancia da classe Flask com todas as configurações da aplicação realizadas
+    """
     config_db.inicia_app(app)
 
     api = Api(app)

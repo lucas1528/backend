@@ -2,6 +2,13 @@ from api.modelos import banco_de_dados as db
 from random import randint
 
 class ModeloIrrigador(db.Model):
+    """Classe modelo que herda modelo base da ORM (SQLAlchemy), Utilizada para
+    instanciar objetos a serem criados, deletados, atualizados e obtidos através
+    de metodos http e querys da ORM
+
+    Argumento:
+        db.Model (classe): Classe modelo base da ORM (SQLAlchemy)
+    """
     __tablenome__ = 'irrigadores'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -13,6 +20,8 @@ class ModeloIrrigador(db.Model):
     irrigando = db.Column(db.Boolean())
 
     def __init__(self, nome, localizacao, temporizador, duracao_da_irrigacao, voltagem, irrigando):
+        """Metodo construtor da classe
+        """
         self.nome = nome
         self.localizacao = localizacao
         self.temporizador = temporizador
@@ -21,6 +30,11 @@ class ModeloIrrigador(db.Model):
         self.irrigando = irrigando
         
     def json(self):
+        """Transforma o objeto em um json
+
+        Retorno:
+            json: Objeto representado em json
+        """
         return {
             'id': self.id,
             'nome': self.nome,
@@ -32,6 +46,8 @@ class ModeloIrrigador(db.Model):
         }
     
     def atualizar_irrigador(self, nome, localizacao, temporizador, duracao_da_irrigacao, voltagem, irrigando):
+        """Reconstroi o objeto com atributos atualizados
+        """
         self.nome = nome
         self.localizacao = localizacao
         self.temporizador = temporizador
@@ -41,6 +57,11 @@ class ModeloIrrigador(db.Model):
 
     @classmethod
     def simular_irrigador(cls):
+        """Metodo de classe responsavel por simular o estado de irrigando e a voltagem do irrigador
+
+        Retorno:
+            dicionario: dicionario contendo o estado de irrigando e a voltagem simulados
+        """
         simulacao = dict()
         if randint(0, 100) % 2 == 0:
             simulacao['irrigando'] = True
@@ -56,6 +77,14 @@ class ModeloIrrigador(db.Model):
     
     @classmethod
     def verificar_argumentos(cls, dados):
+        """Metodo de classe responsavel por verificar se os argumentos obrigatórios foram enviados
+
+        Argumento:
+            dados (dicionario): argumentos enviados pelo metodo POST
+
+        Retorno:
+            booleano: Tipo de dado que pode ser True ou False
+        """
         if dados['nome']:    
             if dados['temporizador']:
                 if dados['duracao_da_irrigacao']:
