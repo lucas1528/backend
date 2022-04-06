@@ -1,4 +1,4 @@
-from api.recursos import irrigador, planta
+from api.recursos import irrigador, planta, documentacao
 
 
 def inicia_app(api):
@@ -9,3 +9,5 @@ def inicia_app(api):
     """
     api.add_resource(planta.Planta, '/plantas', '/plantas/<int:id>')
     api.add_resource(irrigador.Irrigador, '/irrigadores', '/irrigadores/<int:id>')
+    api.add_resource(documentacao.Documentacao, '/')
+
