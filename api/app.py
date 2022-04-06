@@ -1,9 +1,9 @@
 from flask import Flask
 from flask_restful import Api
 
-from .configuracoes import configuracao_banco_de_dados as config_db
-from .modelos import banco_de_dados as db
-from .rotas import rotas
+from .api.configuracoes import configuracao_banco_de_dados as config_db
+from .api.modelos import banco_de_dados as db
+from .api.rotas import rotas
 
 app = Flask(__name__)
 
