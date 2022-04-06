@@ -1,3 +1,6 @@
+import os
+
+
 def inicia_app(app):
     """Inicia as configurações de banco de dados da aplicação.
 
@@ -8,7 +11,7 @@ def inicia_app(app):
         app: app com alterações nas configurações do banco de dados
     """
     
-    app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     return app
