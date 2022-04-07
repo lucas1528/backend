@@ -4,4 +4,5 @@ from flask import redirect
 
 class Documentacao(Resource):
     def get(self):
-        return redirect('https://documenter.getpostman.com/view/20248101/UVyuTayN')
+        documentacao = 'https://documenter.getpostman.com/view/20248101/UVyuTayN'
+        return redirect(documentacao)
