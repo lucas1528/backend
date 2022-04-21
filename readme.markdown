@@ -10,5 +10,3 @@ Desenvolva para Josué um backend com uma *API REST*, com os seguintes requisi-t
 * O sistema deve ser programado em **python**.
 
 ***
-
-Link da API hospedada no Heroku: [API](https://apiautoponia.herokuapp.com/)
